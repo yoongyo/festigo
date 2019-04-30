@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+{% load imagekit %}
+{% load custom_tags %}
+<style>
+    body{
+        background-color: rgb(72,160,181);
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'card_annimation/card_annimation.css' %}">
+
+<div class="container-fluid">
+    <div class="row px-3">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row px-3">
+                {% for i in festival_list %}
+                <div class="col-3 mb-4">
+                    <a href="{% url 'festival:festival_detail' i.region i.pk %}" style="text-decoration:none; color:black">
+                        <div class="card" style="width:100%">
+                          <img style="width:100%" height="190rem;" class="card-img-top" src="{{ i.thumbnail.url }}" alt="Card image cap">
+                          <div class="card-body px-2 py-1">
+                              <span style="font-size:0.8rem;color:gray">{{ i.region }} • {{ i.city }}</span>
+                              <h5>{{ i.title }}</h5>
+                              <p class="mb-2" style="font-size:0.9rem;
+                                  display: inline-block;
+                                  white-space: nowrap;
+                                  overflow: hidden;
+                                  text-overflow: ellipsis;
+                                  /* 여러 줄 자르기 추가 스타일 */
+                                  white-space: normal;
+                                  line-height: 1.2;
+                                  height: 2.4em;
+                                  text-align: left;
+                                  word-wrap: break-word;
+                                  display: -webkit-box;
+                                  -webkit-line-clamp: 2;
+                                  -webkit-box-orient: vertical;
+                                  width: 100%;">{{ i.summery }}
+                              </p>
+                              <span>{{ i|add_link|safe }}</span><br>
+                              {% if i.start == i.end %}
+                              <span style="font-size:0.9rem">{{ i.start }}</span>
+                              {% else %}
+                              <span style="font-size:0.9rem">{{ i.start }} ~ {{ i.end }}</span>
+                              {% endif %}
+                          </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.col-3').hover(
+            function(){
+                $(this).animate({
+                    marginTop: "-=1%",
+                }, 200);
+            },
+
+            function(){
+                $(this).animate({
+                    marginTop: "0%"
+                },200);
+            }
+         );
+     });
+</script>
+
+
+
+{% endblock %}

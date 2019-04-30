@@ -1,0 +1,11 @@
+django
+gunicorn
+psycopg2
+django-summernote
+django-bootstrap-datepicker-plus
+django-taggit
+django-multiupload
+django-imagekit
+pillow
+pilkit
+dj-database-url

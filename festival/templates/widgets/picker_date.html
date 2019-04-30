@@ -1,0 +1,12 @@
+{% include "django/forms/widgets/date.html" %}
+
+<script>
+$(function() {
+    $('#{{ widget.attrs.id }}').datepicker({
+        format: 'yyyy-mm-dd',
+        minDate: 0,
+        todayHighlight: true,
+        autoclose: true,
+    });
+});
+</script>

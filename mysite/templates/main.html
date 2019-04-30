@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <!-- 부트스트랩 모바일 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 부트스트랩 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Region Animation -->
+    <link rel="stylesheet" href="{% static 'region_animation/region_animation.css' %}">
+
+    <!-- Search bar -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'search_bar/search_bar.css' %}">
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Monoton);
+        @import url(https://fonts.googleapis.com/css?family=Great+Vibes);
+
+        html, body {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          overflow: hidden;
+        }
+
+        main {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .bg {
+          background-image: url(https://raw.githubusercontent.com/interaminense/repository-codepen/master/neon-codepen/bg-neon.jpg);
+          width: 100%;
+          height: 100%;
+          background-position: center;
+          background-size: 1250px;
+          opacity: .3;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        .wrapper {
+          position: absolute;
+          width: auto;
+          height: 150px;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          text-align: center;
+        }
+
+        .wrapper h1 {
+          font-size: 100px;
+          margin: 0;
+          font-weight: normal;
+        }
+
+        .wrapper h2 {
+          font-size: 20px;
+          margin: 0;
+          font-weight: normal;
+          line-height: 10px;
+        }
+
+        .font1 { font-family: 'Monoton', cursive; }
+        .font2 { font-family: 'Great Vibes', cursive; }
+
+        .input-text {
+          position: absolute;
+          left: 20px;
+          top: 20px;
+          width: 280px;
+          padding: 5px 20px;
+          border: none;
+          background-color: rgba(0, 0, 0, .4);
+          font-family: 'Monoton', cursive;
+          font-size: 35px;
+          box-shadow: 15px 15px 23px rgba(0, 0, 0, .2);
+          outline: none;
+          z-index: 1;
+        }
+
+        .buttons {
+          position: absolute;
+          z-index: 1;
+          right: 20px;
+          top: 20px;
+        }
+
+        .buttons button {
+          float: left;
+          border: none;
+          width: 16px;
+          height: 16px;
+          border-radius: 4px;
+          margin-right: 10px;
+          padding: 0;
+          cursor: pointer;
+        }
+
+        button.btn-pink { background-color: #E91E63; }
+        button.btn-yellow { background-color: #FFC107; }
+        button.btn-green { background-color: #8BC34A; }
+        button.btn-blue { background-color: #03A9F4; }
+
+        @mixin content($color, $id) {
+
+          animation: bgNeon-#{$id} 3s infinite;
+
+          $colorNeon: $color;
+          $colorLightNeon: lighten($colorNeon, 30%);
+          $shadowColor: adjust-hue($colorNeon, -30);
+          $bgNeon: adjust-color($shadowColor, $lightness: -40%);
+
+          .input-text {
+            color: $colorNeon;
+          }
+
+          .wrapper h1 {
+            animation: neon2-#{$id} 3s infinite;
+          }
+
+          .wrapper h2 {
+            text-shadow: 0 0 10px $colorNeon, 0 0 30px $shadowColor;
+            color: $colorNeon;
+          }
+
+          @keyframes neon2-#{$id} {
+            0% {
+              color: $colorNeon;
+              text-shadow: 0 0 10px $colorNeon, 1px 1px $colorLightNeon, 0 0 280px $shadowColor;
+            }
+            80% {
+              color: $colorNeon;
+              text-shadow: 0 0 10px $colorNeon, 1px 1px $colorLightNeon, 0 0 280px $shadowColor;
+            }
+            81% {
+              color: #222;
+              text-shadow: 0 0 10px #000, 1px 1px rgb(99, 74, 82), -2px 0px 4px #29121A;
+            }
+            94% {
+              color: #222;
+              text-shadow: 0 0 10px #000, 1px 1px rgb(99, 74, 82), -2px 0px 4px #29121A;
+            }
+            95% {
+              color: $colorNeon;
+              text-shadow: 0 0 10px $colorNeon, 1px 1px $colorLightNeon, 0 0 280px $shadowColor;
+            }
+            96% {
+              color: #222;
+              text-shadow: 0 0 10px #000, 1px 1px rgb(99, 74, 82), -2px 0px 4px #29121A;
+            }
+            97% {
+              color: $colorNeon;
+              text-shadow: 0 0 10px $colorNeon, 1px 1px $colorLightNeon, 0 0 280px $shadowColor;
+            }
+            98% {
+              color: $colorNeon;
+              text-shadow: 0 0 10px $colorNeon, 1px 1px $colorLightNeon, 0 0 280px $shadowColor;
+            }
+            99% {
+              color: #222;
+              text-shadow: 0 0 10px #000, 1px 1px rgb(99, 74, 82), -2px 0px 4px #29121A;
+            }
+            100% {
+              color: $colorNeon;
+              text-shadow: 0 0 10px $colorNeon, 1px 1px $colorLightNeon, 0 0 280px $shadowColor;
+            }
+          }
+
+          @keyframes bgNeon-#{$id} {
+            0% { background-color: $bgNeon; }
+            80% { background-color: $bgNeon; }
+            81% { background-color: #111; }
+            94% { background-color: #111; }
+            95% { background-color: $bgNeon; }
+            96% { background-color: #111; }
+            97% { background-color: $bgNeon; }
+            98% { background-color: $bgNeon; }
+            99% { background-color: #111; }
+            100% { background-color: $bgNeon; }
+          }
+
+        }
+
+        main.pink { @include content(#E91E63, 1); }
+        main.yellow { @include content(#FFC107, 2); }
+        main.green { @include content(#8BC34A, 3); }
+        main.blue { @include content(#03A9F4, 4); }
+    </style>
+    <script>
+        var app = angular.module('app', []);
+
+        app.controller('neon', function($scope, $element){
+          var _name = 'css3';
+          $scope.user = {
+            name: function(newName) {
+              return arguments.length ? (_name = newName) : _name;
+            }
+          };
+          $scope.getColor = function(color){
+            $scope.color = color;
+          };
+          var _color = ['pink', 'yellow', 'green', 'blue'];
+          $scope.getColor(_color[Math.floor((Math.random() * 3) + 1)]);
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+</head>
+<body>
+    <!-- 네온 사인 -->
+    <main class="{{color}}" ng-app="app" ng-controller="neon">
+        <div class="bg"></div>
+        <input autofocus id="focus" class="input-text" type="text" name="userName"
+            ng-model="user.name"
+            ng-model-options="{ getterSetter: true }" />
+
+        <div class="buttons">
+            <button class="btn-pink" ng-click="getColor('pink')"></button>
+            <button class="btn-yellow" ng-click="getColor('yellow')"></button>
+            <button class="btn-green" ng-click="getColor('green')"></button>
+            <button class="btn-blue" ng-click="getColor('blue')"></button>
+        </div>
+
+        <div class="wrapper">
+            <h1 class="font1">
+            <span ng-bind="user.name()"></span>
+            <h2 class="font2"> neon by @interaminense</h2>
+            </h1>
+        </div>
+    </main>
+
+
+    <div class="container">
+    <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container-fluid"><a class="navbar-brand" href="#">FestiGo</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse d-md-flex d-lg-flex d-xl-flex justify-content-md-end justify-content-lg-end justify-content-xl-end"
+                id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="#"></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#"></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#"></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <br>
+    <br>
+    <!-- Search bar -->
+    <div class="container h-100">
+      <div class="d-flex justify-content-center h-100">
+        <div class="searchbar">
+          <input class="search_input" type="text" name="" placeholder="Search...">
+          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 col-sm-12">
+                <div class="row">
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">서울</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">경기</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">강원</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">충남</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">충북</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">제주</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        <div class="row my-5">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">부산</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">인천</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">광주</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">대전</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">울산</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">세종</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        <div class="row my-5">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">전북</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">전남</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">경북</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">경남</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">대구</span></a>
+                    </div>
+                    <div class="col-2 region">
+                        <a href="#" style="text-decoration:none"><span class="fo" aria-hidden="true">전체</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!--<footer style="background-color:rgb(53,59,71); height:150px;">-->
+        <!--<p class="p-5 text-center" style="color:white;">Bizchool Company © 2019</p>-->
+    <!--</footer>-->
+</body>
+
+</html>

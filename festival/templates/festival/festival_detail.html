@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load custom_tags %}
+
+<!-- 이미지 슬라이드 -->
+<link type="text/css" rel="stylesheet" href="{% static 'slider/lightslider.css' %}" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="{% static 'slider/lightslider.js' %}"></script>
+<style>
+    ul{
+        list-style: none outside none;
+        padding-left: 0;
+        margin: 0;
+    }
+    .demo .item{
+        margin-bottom: 60px;
+    }
+    .content-slider li{
+        background-color: #ed3020;
+        text-align: center;
+        color: #FFF;
+    }
+    .content-slider h3 {
+        margin: 0;
+        padding: 70px 0;
+    }
+    .demo{
+        width: 100%;
+    }
+</style>
+<div class="container-fluid">
+    <!-- 축제 간략 정보 -->
+    <div class="row px-5">
+        <div class="col-1"></div>
+        <div class="col-10 px-5 py-2">
+            <div class="row" style="border:1px solid gray">
+                <hr>
+                <div class="col-7 p-4">
+                    <!-- 이미지 슬라이드 -->
+                    <!--<script src="https://www.powr.io/powr.js?platform=html"></script><div class="powr-image-slider" id="5736500c_1556452050"></div>-->
+                    <div class="demo">
+                        <div class="item">
+                            <div class="clearfix" style="max-width:100%;">
+                                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                    <li data-thumb="{% static 'img/cS-1.jpg' %}">
+                                        <img style="width:100%" src="{% static 'img/cS-1.jpg' %}" />
+                                    </li>
+                                    <li data-thumb="{% static 'img/tt.png' %}">
+                                        <img style="width:100%" src="{% static 'img/tt.png' %}" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                         $(document).ready(function() {
+                            $("#content-slider").lightSlider({
+                                loop:true,
+                                keyPress:true
+                            });
+                            $('#image-gallery').lightSlider({
+                                gallery:true,
+                                item:1,
+                                thumbItem:9,
+                                slideMargin: 0,
+                                speed:1000,
+                                auto:true,
+                                loop:true,
+                                onSliderLoad: function() {
+                                    $('#image-gallery').removeClass('cS-hidden');
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="col-5 p-4">
+                    <h4>{{ festival.title }}</h4>
+                    <span>축제 기간 : {{ festival.start }} {{ festival.start_time }} ~ {{ festival.end }} {{ festival.end_time }}</span>
+                    <br>
+                    <span>축제 장소 : {{ festival.address }}</span>
+                    <hr>
+                    <span>{{ festival.summery}}</span><br>
+                    <span>{{ festival.tag }}</span>
+                    <hr>
+                    <span>개설자 정보</span>
+                    <hr>
+                    <span>{{ festival.admin_name }}</span><br>
+                    <span>{{ festival.admin_email }}</span><br>
+                    <span>{{ festival.admin_phone }}</span><br>
+                    <hr>
+                    <span>문의사항은 메일/전화/댓글을 이용해주세요.</span>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <!-- 축제 상세 정보 -->
+    <div class="row px-5">
+        <div class="col-1"></div>
+        <div class="col-10 px-5 py-2">
+            <div class="row p-4" style="border:1px solid gray">
+                {{ festival.content|safe }}
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+{% endblock %}

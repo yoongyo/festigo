@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ form.media }}
+{% load static %}
+
+
+<script src="{% static 'dropzone/dropzone.js' %}"></script>
+<!--<link rel="stylesheet" href="{% static 'dropzone/dropzone.css' %}">-->
+<!--<script src="{% static 'dropzone/dropzone-amd-module.js' %}"></script>-->
+<!--<link rel="stylesheet" href="{% static 'dropzone/basic.css' %}">-->
+
+<div class="p-5" style="background-color:rgb(247,247,247);">
+<div class="container p-4" style="background-color:white;" >
+    <form method="post" enctype="multipart/form-data" class="dropzone clsbox" id="MultiFileUpload">
+        {% csrf_token %}
+        축제명 :
+        {{ form.content }}
+        {{ form.start }}
+        {{ form.end }}
+        {{ form.map }}
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <!-- dropzone -->
+
+
+        <div class="fallback">
+            <input id="file" name="file" type="file" multiple="multiple"/>
+        </div>
+
+        <script>
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+            Dropzone.autoDiscover = false;
+            $('#MultiFileUpload').dropzone({
+                url: "/festival/fileupload/",
+                crossDomain: false,
+                paramName: "file",
+                parallelUploads: 5,
+                autoProcessQueue: true,
+                filesizeBase: 1024,
+                maxFilesize: 10000,
+                dictRemoveFileConfirmation: null,
+                init: function () {
+                    this.on("uploadprogress", function (file, progress, bytesSent) {
+                        progress = bytesSent / file.size * 100;
+                        console.log(filesizecalculation(bytesSent))
+                    });
+                    this.on("maxfilesexceeded", function (data) {
+                        var res = eval('(' + data.xhr.responseText + ')');
+                    });
+                    this.on("addedfile", function (file) {
+                        var removeButton = Dropzone.createElement("<button data-dz-remove " +
+                            "class='del_thumbnail btn btn-default'><span class='glyphicon glyphicon-trash'></span> Sil</button>");
+                        var _this = this;
+                        removeButton.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            _this.removeFile(file);
+                        });
+                        file.previewElement.appendChild(removeButton);
+                    });
+                    this.on("error", function (file, message) {
+                        console.log(message);
+                        this.removeFile(file);
+                    });
+                    this.on('sending', function (file, xhr, formData) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    });
+                }
+            });
+            Dropzone.prototype.filesize = function (size) {
+               filesizecalculation(size)
+            };
+            function filesizecalculation(size) {
+                if (size < 1024 * 1024) {
+                    return "<strong>" + (Math.round(Math.round(size / 1024) * 10) / 10) + " KB</strong>";
+                } else if (size < 1024 * 1024 * 1024) {
+                    return "<strong>" + (Math.round((size / 1024 / 1024) * 10) / 10) + " MB</strong>";
+                } else if (size < 1024 * 1024 * 1024 * 1024) {
+                    return "<strong>" + (Math.round((size / 1024 / 1024 / 1024) * 10) / 10) + " GB</strong>";
+                }
+            }
+        </script>
+        <!-- /dropzone -->
+
+        <div class="center-block" style="width:200px;">
+            <input class="btn btn-primary" type="submit" style="margin-bottom:25px; float:right; width:200px; height:50px; font-size:24px;" value="완 료">
+        </div>
+    </form>
+</div>
+</div>
+
+{% endblock %}
